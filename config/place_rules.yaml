@@ -1,0 +1,60 @@
+# 9쪽 플레이스 점검 10항목. 기준치는 운산파트너스 직영 운산자동차(광명)가 실제 운영하는 수준.
+# verdict: 값이 standard 이상이면 "○", warn 이상이면 "△", 그 아래 "×"
+items:
+  - key: photos
+    label: 플레이스 사진 수
+    standard: 50
+    warn: 25
+    standard_text: "50장 이상, 전·중·후 포함"
+    now_format: "{photos}장, {photos_last_year}년 업로드{photos_note}"
+  - key: news_days_since
+    label: 소식 최근 게시
+    standard: 14          # 최근 14일 안에 게시 → ○
+    warn: 60
+    direction: lower_is_better
+    standard_text: "주 2회"
+    now_format: "{last_news_text}이 마지막"
+  - key: reply_rate
+    label: 리뷰 답글률
+    standard: 0.9
+    warn: 0.5
+    standard_text: "90% 이상, 48시간 내"
+    now_format: "{visitor_reviews}개 중 {replied}개 답글 ({reply_rate_pct}%)"
+  - key: visitor_reviews
+    label: 리뷰 수
+    standard: 150
+    warn: 25
+    standard_text: "방문자 150+ · 블로그 60+"
+    now_format: "방문자 {visitor_reviews} · 블로그 {blog_reviews}"
+  - key: rating
+    label: 평점
+    standard: 4.5
+    warn: 4.0
+    standard_text: "4.5 이상"
+    now_format: "{rating}"
+  - key: hours_ok
+    label: 영업시간·전화·주소
+    standard: true
+    standard_text: "정확"
+    now_format: "{hours_text}"
+  - key: has_kakao
+    label: 사진 문의 창구
+    standard: true
+    standard_text: "카톡 채널 또는 톡톡, 사진 접수"
+    now_format: "{kakao_text}"
+  - key: daangn
+    label: 당근 비즈프로필
+    standard: true
+    standard_text: "있음, 단골 100+"
+    now_format: "{daangn_text}"
+    manual: true
+  - key: google_ok
+    label: 구글 비즈니스 프로필
+    standard: true
+    standard_text: "소유 확인, 사진 20장+"
+    now_format: "{google_text}"
+  - key: has_warranty_notice
+    label: 보증·가격 안내
+    standard: true
+    standard_text: "1년 보증, 사전 비용 안내 명시"
+    now_format: "{warranty_text}"

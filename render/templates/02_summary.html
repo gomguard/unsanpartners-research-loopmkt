@@ -1,0 +1,66 @@
+{% from "_macros.html" import header, footer %}
+{# 2쪽 한 장 요약 — 숫자 4, 그림 2, 결론 3, 할 일 3. 주황: 타일 1 + 막대 1 (2곳) #}
+{% set s = r.summary %}{% set o = r.funnel.outputs %}{% set sh = s.owner_share %}
+<section class="page" style="gap:22px">
+{{ header(r, period) }}
+
+<div class="title" style="gap:6px">
+  <h1>한 장 요약</h1>
+  <p class="lede">바쁘시면 이 장만 보셔도 됩니다. 숫자 네 개, 그림 둘, 결론 세 줄, 지금 할 일 세 가지입니다.</p>
+</div>
+
+<div class="grid4">
+  <div class="tile"><span class="k">{{ r.shop.region }} 월 검색 수요</span><span class="v">{{ s.volume_total|comma }}</span><span class="k">꼬리 키워드 {{ s.kw_count }}개 합계</span></div>
+  <div class="tile hot"><span class="k">사장님 가게 1페이지 노출</span><span class="v">{{ s.our_page1_count }}개</span><span class="k">{{ s.kw_count }}개 중 {{ s.our_page1_pct|pct1 }}%</span></div>
+  <div class="tile"><span class="k">플레이스 리뷰</span><span class="v">{{ r.place.visitor_reviews }}</span><span class="k">{{ r.place.benchmark_reviews_text }}</span></div>
+  <div class="tile"><span class="k">90일 뒤 가능 입고</span><span class="v">+{{ o.range_text }}</span><span class="k">월, 가정치 ({{ pg.opportunity }}쪽)</span></div>
+</div>
+
+<div class="row">
+  {# 왼쪽: 1페이지 자리 누가 갖고 있나 #}
+  {% set mx = [sh['중개'], sh['체험단'], sh['공업사'], sh['기타'], sh['빈자리'], sh['사장님']]|max %}
+  <div class="tile" style="gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px;line-height:18px;font-weight:700">1페이지 {{ s.kw_count }}자리, 누가 갖고 있나</span><span style="font-size:11px;line-height:16px" class="muted">검색어 수</span></div>
+    <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:16px">
+      {% for key in ['중개', '체험단', '공업사', '기타'] %}
+      <div style="display:flex;align-items:center;gap:8px"><span style="width:76px;flex-shrink:0">{{ labels[key] }}</span><div class="bar"><i style="width:{{ (sh[key] / mx * 100)|round|int }}%"></i></div><span style="width:24px;flex-shrink:0;text-align:right">{{ sh[key] }}</span></div>
+      {% endfor %}
+      <div style="display:flex;align-items:center;gap:8px"><span style="width:76px;flex-shrink:0" class="hot">사장님 가게</span><div class="bar"><i class="hot" style="width:{{ [((sh['사장님'] / mx * 100)|round|int), 2]|max }}%"></i></div><span style="width:24px;flex-shrink:0;text-align:right" class="hot">{{ sh['사장님'] }}</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="width:76px;flex-shrink:0" class="muted">빈자리</span><div class="bar"><i class="empty" style="width:{{ (sh['빈자리'] / mx * 100)|round|int }}%"></i></div><span style="width:24px;flex-shrink:0;text-align:right" class="muted">{{ sh['빈자리'] }}</span></div>
+    </div>
+    <span style="font-size:11px;line-height:15px" class="muted">각 검색어 1페이지의 1위 자리 기준. 보험·정보성 블로그 {{ sh['정보'] }}개는 뺐습니다. 빈자리 = 공업사 글이 없는 검색어.</span>
+  </div>
+
+  {# 오른쪽: 지금 → 90일 뒤 #}
+  <div class="tile" style="gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px;line-height:18px;font-weight:700">지금 → 90일 뒤 목표</span><span style="display:flex;gap:10px;font-size:11px;line-height:16px" class="muted"><span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#B9C0D1;border-radius:2px"></span>지금</span><span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#1C2A76;border-radius:2px"></span>90일 뒤</span></span></div>
+    <div style="display:flex;flex-direction:column;gap:9px;font-size:12px;line-height:16px">
+      {% for t in targets %}
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <div style="display:flex;justify-content:space-between"><span>{{ t.label }}</span><span><span class="muted">{{ t.now }}</span> → <b>{{ t.target }}</b></span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><div class="bar8"><i class="now" style="width:{{ t.now_w }}%"></i></div><div class="bar8"><i class="tgt" style="width:{{ t.tgt_w }}%"></i></div></div>
+      </div>
+      {% endfor %}
+    </div>
+    <span style="font-size:11px;line-height:15px" class="muted">막대는 항목마다 자기 기준으로 그렸습니다. 90일 뒤 숫자는 목표치입니다.</span>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="eyebrow">결론 세 줄</div>
+  <div class="numlist">
+    {% for c in r.narrative.conclusions %}<div><em>{{ loop.index }}</em><span>{{ c|safe }}</span></div>{% endfor %}
+  </div>
+</div>
+
+<div class="sec">
+  <div class="eyebrow">지금 할 일 세 가지</div>
+  <div class="grid3">
+    <div class="box" style="display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;line-height:16px" class="muted">2주 안에</span><span style="font-size:15px;line-height:22px;font-weight:700">플레이스 정비</span><span style="font-size:12px;line-height:18px">사진 {{ r.place.photos }}장 → {{ r.plan.targets.photos }}, 소식 재개, 리뷰 답글. 10개 항목 중 {{ r.place_fail_count }}개 미달({{ pg.place }}쪽).</span></div>
+    <div class="box" style="display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;line-height:16px" class="muted">매일</span><span style="font-size:15px;line-height:22px;font-weight:700">사례 1건 발행</span><span style="font-size:12px;line-height:18px">전·중·후 사진 3장만 보내 주시면 글은 운산이 씁니다. 하루 10분 검수.</span></div>
+    <div class="box" style="display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;line-height:16px" class="muted">이번 주</span><span style="font-size:15px;line-height:22px;font-weight:700">카톡 사진 접수 창구</span><span style="font-size:12px;line-height:18px">사진 한 장으로 문의받는 창구. 어디서 온 손님인지 자동 기록.</span></div>
+  </div>
+</div>
+
+{{ footer("조사 기준일 " ~ date_text ~ " · 이 장의 숫자는 " ~ pg.demand ~ "~" ~ pg.opportunity ~ "쪽에서 하나씩 풀어 설명합니다", pg.summary, total) }}
+</section>

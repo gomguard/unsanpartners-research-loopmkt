@@ -1,0 +1,47 @@
+{% from "_macros.html" import mark %}
+{# 1쪽 표지 — 남색 띠 + 점 그리드 인포그래픽. 주황은 점 n개(사장님 가게가 뜨는 검색어)에만. #}
+<section class="page" style="padding:0;gap:0">
+
+<div style="padding:40px 60px;background:#1C2A76;display:flex;justify-content:space-between;align-items:center">
+  <div style="display:flex;align-items:center;gap:14px">
+    {{ mark(44, 28, '#F6F4EF') }}
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-size:20px;line-height:26px;font-weight:800;letter-spacing:-0.01em;color:#F6F4EF">운산파트너스</span>
+      <span style="font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.18em;color:#C9D2E3">데이터 분석실</span>
+    </div>
+  </div>
+  {% if r.is_example %}<span style="font-size:12px;line-height:16px;color:#C9D2E3;border:1px solid rgba(201,210,227,0.5);border-radius:999px;padding:4px 10px">예시 데이터</span>{% endif %}
+</div>
+
+<div style="flex:1 1 0;padding:72px 60px 52px;display:flex;flex-direction:column">
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div style="font-size:14px;line-height:20px;font-weight:700;letter-spacing:0.14em;color:#B4501F">사고수리 검색 진단 리포트</div>
+    <h1 style="margin:0;font-size:60px;line-height:72px;font-weight:800;letter-spacing:-0.02em;color:#1C2A76">{{ r.title }}</h1>
+    <div style="font-size:16px;line-height:26px;color:#5E6675">{{ r.sub_regions_text }} · {{ month_text }}</div>
+  </div>
+
+  <div style="margin-top:64px;display:flex;align-items:center;gap:40px">
+    <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:10px">
+      <div style="font-size:108px;line-height:108px;font-weight:800;letter-spacing:-0.04em;color:#1C2A76">{{ r.summary.our_page1_pct|pct1 }}<span style="font-size:56px;font-weight:700">%</span></div>
+      <div style="font-size:18px;line-height:28px;font-weight:700">{{ r.shop.region_short }}에서 사고 수리를 검색하는 차주 중<br>사장님 가게를 만나는 비율</div>
+      <div style="font-size:14px;line-height:22px;color:#5E6675">{{ r.narrative.cover_sub|safe }}</div>
+    </div>
+    {# 점 하나 = 검색어 하나. cols×cols 격자에서 남는 칸은 흰 마스크로 덮고, 앞쪽 n개를 주황으로. #}
+    <div style="position:relative;width:{{ grid.size }}px;height:{{ grid.size }}px;flex-shrink:0;background-image:radial-gradient(circle,#1C2A76 5.5px,transparent 6.5px);background-size:{{ grid.cell }}px {{ grid.cell }}px;background-position:0 0" role="img" aria-label="검색어 {{ r.summary.kw_count }}개 중 사장님 가게가 뜨는 {{ r.summary.our_page1_count }}개">
+      {% for m in grid.masks %}<div style="position:absolute;left:{{ m.x }}px;top:{{ m.y }}px;width:{{ grid.cell }}px;height:{{ grid.cell }}px;background:#ffffff"></div>{% endfor %}
+      {% for d in grid.hot %}<div style="position:absolute;left:{{ d.x }}px;top:{{ d.y }}px;width:15px;height:15px;border-radius:50%;background:#E2703A;box-shadow:0 0 0 3px #ffffff"></div>{% endfor %}
+    </div>
+  </div>
+
+  <div style="margin-top:72px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 32px;font-size:14px;line-height:24px">
+    {% for t, n in toc %}<div style="display:flex;justify-content:space-between;border-bottom:1px solid #DDD8CC;padding-bottom:4px"><span>{{ t }}</span><span class="muted">{{ n }}</span></div>{% endfor %}
+  </div>
+
+  <div style="margin-top:auto;padding-top:14px;border-top:1px solid #DDD8CC;display:flex;justify-content:space-between;align-items:flex-end;font-size:12px;line-height:18px;color:#5E6675">
+    <div>조사 기준일 {{ date_text }} · 네이버 검색광고 키워드도구 · 네이버 플레이스 · 통합검색 1페이지 수집<br>담당 분석가 {{ r.analyst.name }} · {{ r.analyst.phone }} · {{ r.analyst.email }}</div>
+    <div style="text-align:right">이 리포트는 {{ r.shop.name }}를 위해 작성되었습니다.<br>외부 공유 시 운산파트너스에 알려 주세요.</div>
+  </div>
+
+</div>
+</section>

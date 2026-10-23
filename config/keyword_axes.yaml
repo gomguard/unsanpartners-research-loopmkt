@@ -1,0 +1,23 @@
+# 꼬리 키워드 조합 축. 지역(regions.yaml) × 아래 축들을 곱해 후보를 만들고,
+# 검색광고 API로 검색량을 붙인 뒤 0인 것은 버린다. 자동완성 표현도 후보에 합친다.
+parts: [범퍼, 휀다, 도어, 트렁크, 보닛, 사이드미러, 문콕, 휠, 범퍼 긁힘, 범퍼 교체]
+services: [공업사, 1급공업사, 판금, 판금도색, 도색, 사고차 수리, 사고 수리, 외제차 판금, 보험 수리]
+modifiers: [비용, 가격, 견적, 기간, 추천, 후기, 잘하는 곳, 어디, 자기부담금]
+car_models: [아반떼, 쏘나타, 그랜저, 스포티지, 쏘렌토, 카니발, 투싼, K5, 벤츠, BMW]   # 실제 입고 상위 차종으로 교체
+
+# 조합 패턴 (지역 축은 regions.sub_regions)
+patterns:
+  - "{region} {service}"
+  - "{region} {service} {modifier}"
+  - "{region} {part} {modifier}"
+  - "{region} {part} 수리 {modifier}"
+
+# 차종 조합은 수가 많아(수천 개) 기본에서 뺀다. 검색광고 호출 여유가 있을 때 candidates(region, extra=True)
+patterns_extra:
+  - "{region} {model} {part} {modifier}"
+  - "{model} {part} 교체 비용 {region}"
+
+# 의도 분류 규칙 (7쪽 '의도' 열)
+intent:
+  transactional_tokens: [비용, 가격, 견적, 추천, 잘하는 곳, 어디, 공업사, 보험, 자기부담금, 교체, 수리]
+  informational_tokens: [원인, 자가, DIY, 방법, 뜻, 차이]

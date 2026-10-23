@@ -1,0 +1,50 @@
+{% from "_macros.html" import header, footer %}
+{# 6쪽 돌리면 얼마나 들어오나 — 퍼널 5칸 + 매출·일정 카드 + 가정표. 주황: 퍼널 마지막 칸 #}
+{% set a = r.funnel.assumptions %}{% set o = r.funnel.outputs %}
+<section class="page">
+{{ header(r, period) }}
+
+<div class="title">
+  <h1>돌리면 얼마나 들어오나</h1>
+  <p class="lede">검색 수요에서 입고까지 다섯 단계로 줄여서 계산했습니다. 가정은 전부 아래에 적었고, 90일 뒤에는 가정 대신 실제 숫자로 다시 드립니다.</p>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:6px">
+  <div style="display:flex;align-items:flex-end;gap:6px">
+    {% set arrow %}<span style="font-size:16px;line-height:30px;color:#8A93A8;padding-bottom:30px">→</span>{% endset %}
+    <div class="chip" style="padding:12px 10px;border-radius:8px"><span class="k">월 검색 수요</span><span class="v">{{ r.summary.volume_total|comma }}</span><span class="k">{{ pg.demand }}쪽 실측</span></div>{{ arrow }}
+    <div class="chip" style="padding:12px 10px;border-radius:8px"><span class="k">1페이지 노출</span><span class="v">{{ o.impressions|comma }}</span><span class="k">점유 {{ a.share|pct }}</span></div>{{ arrow }}
+    <div class="chip" style="padding:12px 10px;border-radius:8px"><span class="k">클릭</span><span class="v">{{ o.clicks|comma }}</span><span class="k">클릭률 {{ a.ctr|pct }}</span></div>{{ arrow }}
+    <div class="chip" style="padding:12px 10px;border-radius:8px"><span class="k">문의</span><span class="v">{{ o.inquiries }}</span><span class="k">전환 {{ a.inquiry|pct }}</span></div>{{ arrow }}
+    <div class="chip hot" style="padding:12px 10px;border-radius:8px"><span class="k">입고</span><span class="v">{{ o.intakes }}대 / 월</span><span class="k">전환 {{ a.intake|pct }}</span></div>
+  </div>
+  <div style="font-size:12px;line-height:16px" class="muted">보수적으로 잡으면 {{ o.range_low }}대, 플레이스 전환까지 올라오면 {{ o.range_high }}대. 그래서 "+{{ o.range_text }}"로 말씀드립니다.</div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <span class="eyebrow">매출로 환산하면</span>
+    <span style="font-size:14px;line-height:22px">사고 수리 1대 평균 수리비를 <b>{{ a.ticket_krw|man }} 원</b>으로 잡으면{% if a.ticket_is_assumed %}(사장님 실제 평균으로 바꿔 계산해 드립니다){% else %}(사장님 최근 3개월 실제 평균){% endif %}</span>
+    <span style="font-size:26px;line-height:34px;font-weight:900">월 +{{ o.revenue_text }} 원</span>
+    <span style="font-size:13px;line-height:20px" class="muted">{{ o.range_low }}대 × {{ a.ticket_krw|man }} = {{ o.revenue_low|man }} 원 · {{ o.range_high }}대 × {{ a.ticket_krw|man }} = {{ o.revenue_high|man }} 원. 보험 수리는 대차·부품 포함 금액이 아니라 공임·도장 기준으로 보셔야 합니다.</span>
+  </div>
+  <div class="card">
+    <span class="eyebrow">언제부터 보이나</span>
+    <span style="font-size:14px;line-height:22px">{% for t in r.narrative.timeline %}{{ t|safe }}{% if not loop.last %}<br>{% endif %}{% endfor %}</span>
+    <span style="font-size:13px;line-height:20px" class="muted">검색 노출은 쌓이는 자산이라 90일 이후에도 글을 멈추지 않는 한 계속 늘어납니다.</span>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="eyebrow">가정과 근거 — 90일 뒤 실측으로 교체</div>
+  <div class="tbl" style="grid-template-columns:120px 70px 70px 70px minmax(0,1fr)">
+    <div class="th" style="padding:6px 10px">가정</div><div class="th r" style="padding:6px 10px">보수</div><div class="th r" style="padding:6px 10px">기본</div><div class="th r" style="padding:6px 10px">상단</div><div class="th" style="padding:6px 10px">근거</div>
+    {% for key, label in [('share', '1페이지 점유'), ('ctr', '클릭률'), ('inquiry', '문의 전환'), ('intake', '입고 전환')] %}
+    <div class="b" style="padding:6px 10px">{{ label }}</div><div class="r" style="padding:6px 10px">{{ a.conservative[key]|pct }}</div><div class="r" style="padding:6px 10px">{{ a[key]|pct }}</div><div class="r" style="padding:6px 10px">{{ a.optimistic[key]|pct }}</div><div style="padding:6px 10px">{{ a.notes[key] }}</div>
+    {% endfor %}
+    <div class="b" style="padding:6px 10px">평균 수리비</div><div class="r" style="padding:6px 10px">—</div><div class="r" style="padding:6px 10px">{{ a.ticket_krw|man }} 원</div><div class="r" style="padding:6px 10px">—</div><div style="padding:6px 10px">{{ a.notes.ticket }}</div>
+  </div>
+</div>
+
+{{ footer("이 장의 숫자는 추정입니다. 계약 후 첫 달부터 채널별 실제 문의·입고를 집계해 매달 이 표를 다시 드립니다", pg.opportunity, total) }}
+</section>

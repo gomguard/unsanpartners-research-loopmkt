@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>진단 리포트 만들기</title>
+<style>
+body{margin:0;padding:32px 16px;background:#F6F4EF;font-family:Pretendard,'Noto Sans KR',system-ui,sans-serif;color:#1B2433}
+main{max-width:480px;margin:0 auto;background:#fff;border:1px solid #DDD8CC;border-radius:12px;padding:28px}
+h1{margin:0 0 4px;font-size:20px;color:#1C2A76}
+p{margin:0 0 20px;font-size:13px;color:#5E6675}
+label{display:block;font-size:12px;font-weight:700;color:#5E6675;margin:14px 0 4px}
+input,select{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #C9D2E3;border-radius:8px;font-size:15px;font-family:inherit}
+button{margin-top:22px;width:100%;padding:12px;border:0;border-radius:8px;background:#1C2A76;color:#fff;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer}
+#st{margin-top:18px;font-size:14px;line-height:22px}
+#st a{color:#B4501F;font-weight:700}
+</style>
+</head>
+<body>
+<main>
+<h1>사고수리 검색 진단 리포트</h1>
+<p>업체명을 넣으면 A4 7장 PDF가 나옵니다. 지역 캐시가 있으면 1~3분.</p>
+<form id="f">
+<label>업체명</label><input name="name" required placeholder="○○공업사">
+<label>지역</label><select name="region"><option>부천권</option><option>광명권</option><option>안양권</option></select>
+<label>네이버 플레이스 ID (선택)</label><input name="place_id" placeholder="m.place.naver.com/place/여기숫자">
+<label>당근 비즈프로필</label><select name="daangn"><option value="unknown">모름</option><option value="yes">있음</option><option value="no">없음</option></select>
+<label>담당 분석가 이름</label><input name="analyst" placeholder="홍길동">
+<button>리포트 만들기</button>
+</form>
+<div id="st"></div>
+</main>
+<script>
+const f=document.getElementById('f'),st=document.getElementById('st');
+f.onsubmit=async e=>{e.preventDefault();st.textContent='접수 중…';
+ const r=await fetch('/jobs',{method:'POST',body:new FormData(f)});const j=await r.json();
+ const t=setInterval(async()=>{const s=await (await fetch('/jobs/'+j.id)).json();
+  if(s.status==='done'){clearInterval(t);st.innerHTML='완료 — <a href="/jobs/'+j.id+'/pdf">PDF 열기</a>';}
+  else if(s.status==='error'){clearInterval(t);st.textContent='실패: '+s.error;}
+  else st.textContent='진행 중… ('+s.status+')';},3000);};
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# 지역 단위 캐시의 키. sub_regions는 키워드 조합의 지역 축으로 쓴다.
+regions:
+  부천권:
+    city: 부천
+    sub_regions: [부천, 중동, 상동, 송내, 원미, 소사, 역곡, 신중동]
+    google_location: "Bucheon-si, Gyeonggi-do, South Korea"
+  광명권:
+    city: 광명
+    sub_regions: [광명, 철산, 소하, 하안, 광명사거리, 안양, 시흥, 구로, 금천]
+    google_location: "Gwangmyeong-si, Gyeonggi-do, South Korea"
+  안양권:
+    city: 안양
+    sub_regions: [안양, 평촌, 범계, 인덕원, 군포, 의왕]
+    google_location: "Anyang-si, Gyeonggi-do, South Korea"

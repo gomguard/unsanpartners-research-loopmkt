@@ -1,0 +1,46 @@
+{% from "_macros.html" import header, footer %}
+{# 4쪽 그 자리를 누가 먹고 있나 — 와플(칸 하나 = 검색어 하나) + 경쟁 표 + 설명 3. 주황: 와플 사장님 칸 + 표 사장님 행 #}
+{% set s = r.summary %}{% set sh = s.owner_share %}
+<section class="page">
+{{ header(r, period) }}
+
+<div class="title">
+  <h1>그 자리를 누가 먹고 있나</h1>
+  <p class="lede">{{ s.kw_count }}개 검색어의 1페이지를 누가 차지하고 있는지 세어 봤습니다. 1위는 {{ top_owner_desc }}입니다.</p>
+</div>
+
+<div class="sec">
+  <div class="eyebrow">1페이지 점유 — {{ s.kw_count }}개 검색어 기준</div>
+  <div style="display:flex;gap:28px;align-items:center">
+    <svg viewBox="0 0 {{ waffle.size }} {{ waffle.size }}" style="width:272px;height:272px;flex-shrink:0" role="img" aria-label="검색어 {{ s.kw_count }}개의 1페이지 1위 자리를 누가 갖고 있는지 칸으로 표시">
+      {% for c in waffle.cells %}{% if c.hollow %}<rect x="{{ c.x + 0.5 }}" y="{{ c.y + 0.5 }}" width="11" height="11" rx="2" fill="none" stroke="#A7AEC2" stroke-width="1"/>{% else %}<rect x="{{ c.x }}" y="{{ c.y }}" width="12" height="12" rx="2" fill="{{ c.fill }}"/>{% endif %}{% endfor %}
+    </svg>
+    <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:7px;font-size:13px;line-height:18px">
+      {% for L in waffle.legend %}
+      <div style="display:flex;align-items:center;gap:10px">
+        {% if L.hollow %}<span style="width:12px;height:12px;border-radius:2px;border:1px solid #A7AEC2;flex-shrink:0"></span>{% else %}<span style="width:12px;height:12px;border-radius:2px;background:{{ L.fill }};flex-shrink:0"></span>{% endif %}
+        <span style="flex:1 1 0;font-weight:700{% if L.key == '사장님' %};color:#B4501F{% elif L.key == '빈자리' %};color:#5E6675{% endif %}">{{ L.label }}</span>
+        <span{% if L.key == '사장님' %} class="hot"{% elif L.key == '빈자리' %} class="muted"{% endif %}>{{ L.count }}개 · {{ L.pct }}%</span>
+      </div>
+      {% endfor %}
+      <div style="margin-top:4px;font-size:12px;line-height:16px" class="muted">칸 하나가 검색어 하나입니다. 각 검색어 1페이지의 1위 자리를 누가 갖고 있는지로 셌습니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="tbl small" style="grid-template-columns:110px 96px 76px 84px 70px minmax(0,1fr)">
+  <div class="th">업체</div><div class="th">유형</div><div class="th r">최근 90일 글</div><div class="th r">플레이스 리뷰</div><div class="th r">기사</div><div class="th">어떻게 하고 있나</div>
+  {% for c in r.competitors %}{% set cls = ' hotrow' if c.is_us else '' %}
+  <div class="b{{ cls }}">{{ c.name }}</div><div class="{{ cls }}">{{ c.type }}</div><div class="r{{ cls }}">{{ c.posts_90d or '—' }}</div><div class="r{{ cls }}">{{ c.reviews or '—' }}</div><div class="r{{ cls }}">{{ c.news or '—' }}</div><div class="{{ cls }}">{{ c.note }}</div>
+  {% endfor %}
+</div>
+
+<div class="sec">
+  <div class="eyebrow">그래서 사장님 자리는</div>
+  <div class="bullets">
+    {% for n in r.narrative.competitor_notes %}<div><i></i><span>{{ n|safe }}</span></div>{% endfor %}
+  </div>
+</div>
+
+{{ footer("수집 방법 " ~ s.kw_count ~ "개 검색어의 네이버 통합검색 1페이지를 " ~ date_text ~ "에 수집해 업체별로 집계 · 리뷰 수는 플레이스 공개 값", pg.competitors, total) }}
+</section>

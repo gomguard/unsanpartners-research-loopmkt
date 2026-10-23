@@ -1,0 +1,153 @@
+{
+  "report_id": "bucheon-sample-2026-10",
+  "collected_at": "2026-10-20",
+  "is_example": true,
+  "analyst": { "name": "[이름]", "phone": "[전화]", "email": "[이메일]" },
+
+  "shop": {
+    "name": "○○공업사",
+    "region": "부천권",
+    "region_short": "부천",
+    "sub_regions": ["중동", "상동", "송내", "원미"],
+    "place_id": null,
+    "address": null,
+    "phone": null,
+    "daangn": false,
+    "daangn_regulars": null
+  },
+
+  "keywords": [
+    { "kw": "부천 판금도색",            "volume": 390, "intent": "거래", "page1": [{ "type": "중개", "name": "중개업체 A" }, { "type": "체험단", "name": "체험단" }], "our_rank": null },
+    { "kw": "부천 범퍼 수리 비용",      "volume": 210, "intent": "거래", "page1": [{ "type": "체험단", "name": "체험단" }, { "type": "공업사", "name": "B공업사" }], "our_rank": null },
+    { "kw": "중동 공업사",              "volume": 170, "intent": "거래", "page1": [{ "type": "중개", "name": "중개업체 A" }, { "type": "공업사", "name": "B공업사" }], "our_rank": 3 },
+    { "kw": "부천 문콕 수리",           "volume": 140, "intent": "거래", "page1": [{ "type": "체험단", "name": "체험단 (2024년 글)" }], "our_rank": null },
+    { "kw": "부천 사고차 수리",         "volume": 110, "intent": "거래", "page1": [{ "type": "중개", "name": "중개업체 A" }], "our_rank": null },
+    { "kw": "상동 판금",                "volume": 90,  "intent": "거래", "page1": [{ "type": "체험단", "name": "체험단 (2023년 글)" }], "our_rank": null },
+    { "kw": "부천 보험 수리 공업사",    "volume": 80,  "intent": "거래", "page1": [{ "type": "중개", "name": "중개업체 A" }], "our_rank": null },
+    { "kw": "부천 자차 수리 자기부담금", "volume": 70, "intent": "정보", "page1": [{ "type": "정보", "name": "보험 블로그" }], "our_rank": null },
+    { "kw": "송내 공업사",              "volume": 60,  "intent": "거래", "page1": [{ "type": "공업사", "name": "B공업사" }, { "type": "체험단", "name": "체험단" }], "our_rank": 5 },
+    { "kw": "부천 외제차 판금",         "volume": 60,  "intent": "거래", "page1": [{ "type": "기타", "name": "수입차 전문점 광고" }], "our_rank": null },
+    { "kw": "부천 휀다 교환 비용",      "volume": 50,  "intent": "거래", "page1": [], "our_rank": null },
+    { "kw": "원미구 범퍼 교체",         "volume": 40,  "intent": "거래", "page1": [], "our_rank": null }
+  ],
+
+  "summary": {
+    "kw_count": 287,
+    "volume_total": 2600,
+    "tx_kw_count": 118,
+    "tx_volume": 940,
+    "our_page1_count": 2,
+    "empty_count": 64,
+    "owner_share": { "사장님": 2, "중개": 48, "체험단": 31, "공업사": 22, "기타": 19, "정보": 101, "빈자리": 64 },
+    "flippable_count": 95
+  },
+
+  "competitors": [
+    { "name": "중개업체 A", "type": "접수센터(중개)", "page1_count": 48, "posts_90d": "120+", "reviews": "97",  "news": "1", "note": "공장 없이 지역 키워드 글로 접수, 제휴 공업사로 입고. 외제차 대차·무료 픽업 미끼" },
+    { "name": "B공업사",    "type": "1급 공업사",     "page1_count": 22, "posts_90d": "40",   "reviews": "210", "news": "0", "note": "체험단 대행 월 계약, 사진 품질 낮음, 답글 없음" },
+    { "name": "체험단 블로그", "type": "대행사 묶음", "page1_count": 31, "posts_90d": "—",    "reviews": "—",   "news": "—", "note": "2023~24년 글이 대부분, 광고 표기 없는 글 다수 → 밀어내기 쉬움" },
+    { "name": "사장님 가게", "type": "1급 공업사",    "page1_count": 2,  "posts_90d": "3",    "reviews": "31",  "news": "0", "note": "실제 공장·기술자·20년 업력이 있는데 온라인엔 거의 없음", "is_us": true }
+  ],
+
+  "place": {
+    "photos": 12,
+    "photos_last_year": 2022,
+    "photos_note": ", 작업 사진 없음",
+    "visitor_reviews": 31,
+    "blog_reviews": 8,
+    "replied": 3,
+    "reply_rate": 0.10,
+    "rating": 4.6,
+    "last_news_at": "2025-03",
+    "hours_ok": true,
+    "hours_text": "정확, 휴무 표기 있음",
+    "has_kakao": false,
+    "kakao_text": "없음 (전화만)",
+    "daangn_text": "없음",
+    "google": { "exists": false, "rating": null, "reviews": 0, "photos": 0, "hours_ok": false, "text": "미등록 (지도에 자동 생성된 항목만)" },
+    "has_warranty_notice": false,
+    "warranty_text": "플레이스 어디에도 없음",
+    "benchmark_reviews_text": "운산자동차 기준 [n]"
+  },
+
+  "ai_citation": {
+    "questions": 20,
+    "engines": ["naver_ai", "openai", "perplexity", "gemini", "anthropic"],
+    "runs": 3,
+    "mentioned": 0,
+    "cited": 0,
+    "target": 4,
+    "spot_check": null,
+    "table": []
+  },
+
+  "funnel": {
+    "assumptions": {
+      "share": 0.35, "ctr": 0.12, "inquiry": 0.15, "intake": 0.50,
+      "ticket_krw": 850000, "ticket_is_assumed": true,
+      "conservative": { "share": 0.30, "ctr": 0.11, "inquiry": 0.14, "intake": 0.50 },
+      "optimistic":   { "share": 0.40, "ctr": 0.14, "inquiry": 0.16, "intake": 0.50 },
+      "notes": {
+        "share":   "빈자리 22% + 체험단 자리 11%의 절반 이상을 90일 내 확보",
+        "ctr":     "네이버 블로그·플레이스 1페이지 상단 노출 시 운산 자체 실측 범위",
+        "inquiry": "사진 1장 접수 창구가 있을 때 기준, 전화만 있으면 절반 이하",
+        "intake":  "무료 픽업·대차 연계·사전 비용 안내가 있을 때 기준",
+        "ticket":  "가정값. 사장님 최근 3개월 사고 수리 평균으로 교체"
+      }
+    }
+  },
+
+  "narrative": {
+    "cover_sub": "오른쪽 점 287개가 부천권 검색어 하나하나입니다. 그중 사장님 가게가 1페이지에 뜨는 검색어는 <span class=\"hot\">주황 점 2개</span>뿐입니다. 수요는 충분하고, 90일 안에 월 +6~12대까지 가능합니다. 근거는 3~6쪽에 있습니다.",
+    "conclusions": [
+      "<b>수요는 충분합니다.</b> 부천권에서 한 달에 2,600번 사고 수리 관련 검색이 일어나고, 그중 940번은 \"비용·견적·보험처리\"처럼 바로 맡길 곳을 찾는 검색입니다.",
+      "<b>그 자리는 지금 공장 없는 접수센터와 체험단 글이 먹고 있습니다.</b> 중개업체 A 48, 체험단 블로그 31, B공업사 22. 사장님 가게는 2입니다.",
+      "<b>뒤집을 수 있는 자리가 33%입니다.</b> 287개 중 95개는 상위 글이 오래된 체험단 글이거나 아예 비어 있어, 실제 수리 사례 글이 들어가면 90일 안에 1페이지에 올라갑니다."
+    ],
+    "competitor_notes": [
+      "1위 중개업체 A는 공장이 없습니다. 글은 많지만 전부 남의 공업사 사진입니다. 사장님은 실제 차와 실제 작업 과정을 매일 찍을 수 있고, 그게 검색과 AI 답변 양쪽에서 이기는 재료입니다.",
+      "체험단 글 31개와 빈자리 64개를 합친 95개(33%)는 사례 글 한 편으로 올라가는 자리입니다. 여기부터 90일 안에 가져옵니다.",
+      "B공업사의 리뷰 210개는 당장 못 따라갑니다. 대신 플레이스 사진·소식·답글은 2주면 역전됩니다(5쪽)."
+    ],
+    "place_comment": "<b>항목 미달.</b> 특히 사진·소식·답글 세 가지는 손님이 가장 먼저 보는 곳이라 2주 안에 고치면 체감이 바로 옵니다.",
+    "timeline": [
+      "<b>1~30일</b> 플레이스 전화가 먼저 늘어납니다 (정비 효과)",
+      "<b>31~60일</b> 사례 글이 1페이지에 들어가기 시작, 월 2~4대",
+      "<b>61~90일</b> 빈자리 64개 대부분 확보, 월 6대 이상"
+    ]
+  },
+
+  "plan": {
+    "targets": { "page1": "95", "photos": "50장", "reply": "90%" },
+    "fix_plan": [
+      "<b>1주차</b><br>작업 사진 40장 촬영·업로드(운산이 가이드), 리뷰 31개 전부 답글, 보증·비용 안내 문구 등록",
+      "<b>2주차</b><br>카톡 채널 개설·사진 접수 안내문, 당근 프로필 개설, 구글 프로필 소유 확인",
+      "<b>3주차부터</b><br>소식 주 2회(사례 글에서 자동 생성), 출고 때 리뷰 요청 카톡 자동 발송"
+    ],
+    "ours": [
+      "매일 사례 1건 → 사이트 정본 · 네이버 블로그 · 플레이스 소식 · 당근 · 숏폼(주 1회)",
+      "2주 플레이스 정비 (사진·답글·안내 문구·카톡 접수 창구)",
+      "매주 검색어 7개 배정, 매월 유입·문의·입고 리포트 1장",
+      "분기 1회 기사 게재, 월 1회 지역 평균 수리비 데이터 갱신",
+      "출고 때 리뷰 요청 카톡 자동 발송, 리뷰 답글 초안"
+    ],
+    "yours": [
+      "수리 1건당 전·중·후 사진 3장 카톡 전송",
+      "통화 10분 (무슨 작업이었는지, 비용·기간)",
+      "올라갈 글 10분 검수, 담당자 이름 확인",
+      "카톡으로 들어온 사진 문의 응대"
+    ],
+    "timeline": [
+      "<b>1~30일 · 기반</b><br>플레이스 정비 완료, 카톡 접수 창구 개설, 첫 사례 글 20건 발행, 구글·당근 프로필 개설",
+      "<b>31~60일 · 노출</b><br>빈자리 검색어부터 1페이지 진입, 플레이스 전화·길찾기 증가 확인, 첫 월간 리포트",
+      "<b>61~90일 · 전환</b><br>채널별 문의·입고 실측, 기사 1건, 가정치를 실제 숫자로 바꾼 리포트로 계속할지 결정"
+    ],
+    "price_text": "월 [가격]만 원",
+    "price_note": "위 \"운산파트너스가 합니다\" 전부 포함 · 3개월 단위 · 첫 달 실측 리포트로 판단",
+    "next_steps": [
+      "플레이스 관리자 권한 공유 (스마트플레이스 → 관리자 추가)",
+      "오늘 작업 중인 차 1대, 사진 3장 카톡으로 보내 주시면 첫 글을 내일 보여 드립니다",
+      "최근 3개월 사고 수리 대수·평균 수리비 알려 주시면 6쪽을 실제 숫자로 다시 계산"
+    ]
+  }
+}

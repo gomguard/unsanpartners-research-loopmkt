@@ -1,0 +1,33 @@
+{% from "_macros.html" import header, footer %}
+{# 5쪽 플레이스와 채널 점검 — N/10 + 칸 10 + 표 + 2주 순서. 주황: N/10 띠 + 표의 × #}
+{% set fail = r.place_fail_count %}
+<section class="page">
+{{ header(r, period) }}
+
+<div class="title">
+  <h1>플레이스와 채널 점검</h1>
+  <p class="lede">검색에서 찾아온 손님은 전화하기 전에 플레이스를 봅니다. 사진 몇 장에 답글 없는 리뷰면 거기서 빠져나갑니다. 운산파트너스가 직접 운영하는 운산자동차(광명)를 기준으로 {{ r.place_checks|length }}개 항목을 점검했습니다.</p>
+</div>
+
+<div style="display:flex;gap:16px;align-items:center;padding:14px 18px;background:#fdf1ea;border-radius:10px">
+  <span style="font-size:36px;line-height:40px;font-weight:900;color:#B4501F;white-space:nowrap;flex-shrink:0">{{ fail }} / {{ r.place_checks|length }}</span>
+  <span style="display:flex;gap:5px;flex-shrink:0" role="img" aria-label="{{ r.place_checks|length }}개 항목 중 {{ fail }}개 미달">{% for i in range(r.place_checks|length) %}<span style="width:18px;height:18px;border-radius:3px;background:{{ '#E2703A' if i < fail else '#1C2A76' }}"></span>{% endfor %}</span>
+  <span style="font-size:14px;line-height:22px;flex:1 1 0;min-width:0">{{ r.narrative.place_comment|safe }}</span>
+</div>
+
+<div class="tbl" style="grid-template-columns:150px minmax(0,1fr) 180px 56px">
+  <div class="th">항목</div><div class="th">사장님 가게 현재</div><div class="th">운산자동차 기준</div><div class="th c">판정</div>
+  {% for c in r.place_checks %}
+  <div class="b">{{ c.label }}</div><div>{{ c.now }}</div><div>{{ c.standard }}</div><div class="c {{ 'v-x' if c.verdict == '×' else ('v-o' if c.verdict == '○' else 'v-d') }}">{{ c.verdict }}</div>
+  {% endfor %}
+</div>
+
+<div class="sec">
+  <div class="eyebrow">2주 안에 고치는 순서</div>
+  <div class="grid3" style="font-size:13px;line-height:20px">
+    {% for f in r.plan.fix_plan %}<div class="box">{{ (f|replace('<b>', '<b style="color:#1C2A76">'))|safe }}</div>{% endfor %}
+  </div>
+</div>
+
+{{ footer("점검 기준 " ~ date_text ~ " 네이버 플레이스·당근·구글 지도 공개 화면 · 기준 = 운산파트너스 직영 운산자동차(광명)가 실제 운영하는 수준", pg.place, total) }}
+</section>
