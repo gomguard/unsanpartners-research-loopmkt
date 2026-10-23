@@ -4,11 +4,22 @@
 
 ## 설치
 
-```bash
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+Windows PowerShell (한 줄씩):
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate          # "스크립트 실행이 비활성화" 오류면: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 pip install -r requirements.txt
-playwright install chromium        # PDF용
-cp .env.example .env               # 키 입력
+playwright install chromium     # PDF용
+copy .env.example .env          # 키 입력
+```
+
+macOS / Linux:
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt && playwright install chromium
+cp .env.example .env
 ```
 
 ## 샘플 리포트 만들어 보기
